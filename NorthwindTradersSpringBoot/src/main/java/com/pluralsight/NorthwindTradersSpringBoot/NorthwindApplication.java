@@ -1,24 +1,22 @@
 package com.pluralsight.NorthwindTradersSpringBoot;
 
-import com.pluralsight.NorthwindTradersSpringBoot.ProductDao;
-import com.pluralsight.NorthwindTradersSpringBoot.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 import java.util.List;
 
 @Component
-public class ProductRunnerMenu {
-    private final ProductDao productDao;
+public class NorthwindApplication implements CommandLineRunner {
 
     @Autowired
-    public ProductRunnerMenu(SimpleProductDao productDao) {
-        this.productDao = productDao;
-    }
+    private ProductDao productDao;
 
-    public void startMenu() {
+    @Override
+    public void run(String... args) {
         Scanner scanner = new Scanner(System.in);
+
         while (true) {
             System.out.println("\n1. List Products\n2. Add Product\n3. Exit");
             System.out.print("Choose: ");

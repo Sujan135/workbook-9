@@ -8,8 +8,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class NorthwindTradersSpringBootApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(NorthwindTradersSpringBootApplication.class, args);
-		ProductRunnerMenu menu = context.getBean(ProductRunnerMenu.class);
-		menu.startMenu();
+		SpringApplication.run(NorthwindTradersSpringBootApplication.class, args);
 	}
 }
