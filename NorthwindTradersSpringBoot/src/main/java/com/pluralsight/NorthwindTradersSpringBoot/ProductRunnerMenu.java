@@ -13,7 +13,7 @@ public class ProductRunnerMenu {
     private final ProductDao productDao;
 
     @Autowired
-    public ProductRunnerMenu(ProductDao productDao) {
+    public ProductRunnerMenu(SimpleProductDao productDao) {
         this.productDao = productDao;
     }
 
