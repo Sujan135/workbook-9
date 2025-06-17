@@ -28,4 +28,13 @@ public class Product {
     public double getPrice() {
         return price;
     }
+
+    public void setName(String name) {
+    }
+
+    public void setCategory(String category) {
+    }
+
+    public void setPrice(double price) {
+    }
 }
