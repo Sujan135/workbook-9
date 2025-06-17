@@ -68,7 +68,6 @@ public class JdbcProductDao  implements ProductDao{
 
     @Override
     public void delete(int id) {
-
     }
 
 }
