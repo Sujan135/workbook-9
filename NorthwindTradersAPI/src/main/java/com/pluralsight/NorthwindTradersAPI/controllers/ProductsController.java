@@ -1,5 +1,6 @@
 package com.pluralsight.NorthwindTradersAPI.controllers;
 
+import com.pluralsight.NorthwindTradersAPI.dao.ProductDao;
 import com.pluralsight.NorthwindTradersAPI.models.Product;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,20 +10,22 @@ import java.util.stream.Collectors;
 
 @RestController
 public class ProductsController {
-    private List<Product> products = new ArrayList<>();
+    private final ProductDao productDao;
 
-    public ProductsController() {
-        products.add(new Product(1, "Chai", 1, 18.0));
-        products.add(new Product(2, "Chang", 1, 19.0));
-        products.add(new Product(5, "Gumbo Mix", 2, 21.35));
+    public ProductsController(ProductDao productDao) {
+        this.productDao = productDao;
+
     }
 
-    @RequestMapping(path = "/products", method = RequestMethod.GET)
+     @RequestMapping(path = "/products", method = RequestMethod.GET)
     public List<Product> getAllProducts(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) Double price
     ) {
+
+        List<Product> products = productDao.getAll();
+
         return products.stream()
                     .filter(p -> name == null || p.getProductName().equalsIgnoreCase(name))
                     .filter(p -> categoryId == null || p.getCategoryId() == categoryId)
@@ -32,11 +35,7 @@ public class ProductsController {
 
     @RequestMapping(path = "/products/{id}", method = RequestMethod.GET)
     public Product getProductById(@PathVariable int id) {
-        for (Product product : products) {
-            if (product.getProductId() == id) {
-                return product;
-            }
-        }
-        return null;
+        return productDao.getById(id);
+
     }
 }
