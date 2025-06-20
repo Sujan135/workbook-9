@@ -21,16 +21,16 @@ public class JdbcProductDao implements ProductDao{
     public List<Product> getAll() {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT productId, productName, categoryId, unitPrice FROM Products";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            while (rs.next()) {
+            while (resultSet.next()) {
                 Product product = new Product(
-                        rs.getInt("productId"),
-                        rs.getString("productName"),
-                        rs.getInt("categoryId"),
-                        rs.getDouble("unitPrice"));
+                        resultSet.getInt("productId"),
+                        resultSet.getString("productName"),
+                        resultSet.getInt("categoryId"),
+                        resultSet.getDouble("unitPrice"));
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -43,16 +43,16 @@ public class JdbcProductDao implements ProductDao{
     @Override
     public Product getById(int id) {
         String sql = "SELECT productId, productName, categoryId, unitPrice FROM Products WHERE productId = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     return new Product(
-                            rs.getInt("productId"),
-                            rs.getString("productName"),
-                            rs.getInt("categoryId"),
-                            rs.getDouble("unitPrice"));
+                            resultSet.getInt("productId"),
+                            resultSet.getString("productName"),
+                            resultSet.getInt("categoryId"),
+                            resultSet.getDouble("unitPrice"));
                 }
             }
         } catch (SQLException e) {
